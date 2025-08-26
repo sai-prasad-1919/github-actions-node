@@ -3,19 +3,20 @@ name: Nodejs Github Action
 on: push
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v3 # checkout repo
-            - name: Use Node
+    steps:
+      - uses: actions/checkout@v3 # checkout repo
 
-              uses: actions/setup-node@v3
-              with: 
-                node-version: 20
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'   # enables npm cache
 
-            - name: Install dependencies
-              run: npm install
+      - name: Install dependencies
+        run: npm ci     # faster & clean for CI/CD
 
-            - name: Run test
-              run: npm test
+      - name: Run tests
+        run: npm test
